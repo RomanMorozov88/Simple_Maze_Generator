@@ -72,7 +72,7 @@ public class MazeGenerator {
         List<Cell> result = new ArrayList<>();
         Cell candidateForNext;
         //Нижнее направление.
-        if (current.getY() + 1 < mazeArray.getMazeField().length) {
+        if (current.getY() + 1 < mazeArray.getMazeField().length - 1) {
             candidateForNext = mazeArray.getCell(current.getY() + 1, current.getX());
             if (checkCandidateCell(candidateForNext, current)) {
                 result.add(candidateForNext);
@@ -86,7 +86,7 @@ public class MazeGenerator {
             }
         }
         //Правое направление.
-        if (current.getX() + 1 < mazeArray.getMazeField()[0].length) {
+        if (current.getX() + 1 < mazeArray.getMazeField()[0].length - 1) {
             candidateForNext = mazeArray.getCell(current.getY(), current.getX() + 1);
             if (checkCandidateCell(candidateForNext, current)) {
                 result.add(candidateForNext);
@@ -146,7 +146,7 @@ public class MazeGenerator {
         if (result[0] < 0) {
             result[0] = 0;
         }
-        if (result[1] >= checkedLine) {
+        if (result[1] > checkedLine) {
             result[1] = checkedLine;
         }
         return result;
