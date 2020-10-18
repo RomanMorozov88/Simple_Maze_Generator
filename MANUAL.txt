@@ -1,0 +1,17 @@
+Инструкции по сборке:
+
+Создать в src фаил manifest.mf, содержащий:
+main-class: mazegenerator.MainClass
+class-path: bin\
+
+Скомпилировать:
+javac -sourcepath .\src -d bin src\mazegenerator\MainClass.java
+
+Собрать jar:
+jar -cmf src\manifest.mf maze.jar  -C bin\mazegenerator .
+
+Запустить:
+java -jar maze.jar
+или:
+java -jar maze.jar x y
+где x - ширина, y - высота.

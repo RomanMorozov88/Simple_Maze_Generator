@@ -1,0 +1,2 @@
+main-class: mazegenerator.MainClass
+class-path: bin\
