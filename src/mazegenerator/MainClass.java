@@ -36,6 +36,7 @@ public class MainClass {
         Integer widthX = 30;
         Integer heightY = 20;
         Cell[][] mazeField = MazeFieldFactory.initMazeField(widthX, heightY);
+        String resultFileName = String.format("\\maze_result%dx%d.txt", widthX, heightY);
 
         if (args.length == 2) {
             widthX = getDigit(args[0]);
@@ -43,6 +44,7 @@ public class MainClass {
             if (widthX != null && heightY != null) {
                 if ((heightY >= 10 && heightY <= 50) && (widthX >= 10 && widthX <= 50)) {
                     mazeField = MazeFieldFactory.initMazeField(widthX, heightY);
+                    resultFileName = String.format("\\maze_result%dx%d.txt", widthX, heightY);
                 }
             }
         }
@@ -54,7 +56,6 @@ public class MainClass {
         LookAtMazeField.readMazeField(System.out::print, mazeField);
 
         //Создаём фаил в текущей директории и пишем в него.
-        String resultFileName = String.format("\\maze_result%dx%d.txt", widthX, heightY);
         String filePath = Paths.get("").toAbsolutePath().toString() + resultFileName;
         try (FileWriter writer = new FileWriter(filePath, false)) {
             File file = new File(filePath);
