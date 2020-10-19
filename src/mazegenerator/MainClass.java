@@ -1,10 +1,17 @@
 package mazegenerator;
 
+import mazegenerator.mazegenerator.MazeGenerator;
+import mazegenerator.mazegenerator.MazeGeneratorFirstVersion;
+import mazegenerator.util.LookAtMazeField;
+
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.nio.file.Paths;
 
+/**
+ * Запуск программы.
+ */
 public class MainClass {
 
     /**
@@ -26,53 +33,44 @@ public class MainClass {
 
     public static void main(String[] args) {
 
-        MazeArray mazeArray = new MazeArray(20, 20);
+        Integer widthX = 30;
+        Integer heightY = 20;
+        Cell[][] mazeField = MazeFieldFactory.initMazeField(widthX, heightY);
 
         if (args.length == 2) {
-            Integer x = getDigit(args[0]);
-            Integer y = getDigit(args[1]);
-            if (x != null && y != null) {
-                if ((y >= 10 && y <= 50) && (x >= 10 && x <= 50)) {
-                    mazeArray = new MazeArray(y, x);
+            widthX = getDigit(args[0]);
+            heightY = getDigit(args[1]);
+            if (widthX != null && heightY != null) {
+                if ((heightY >= 10 && heightY <= 50) && (widthX >= 10 && widthX <= 50)) {
+                    mazeField = MazeFieldFactory.initMazeField(widthX, heightY);
                 }
             }
         }
-
-        MazeGenerator mazeGenerator = new MazeGenerator(mazeArray);
-        mazeGenerator.walkFromRandomCell();
+        MazeGenerator mazeGenerator = new MazeGeneratorFirstVersion();
+        mazeGenerator.setMazeField(mazeField);
+        mazeGenerator.walkOverMazeFiled();
 
         //Выводим всё это дело в консоль.
-        for (int i = -1; i <= mazeArray.getMazeField().length; i++) {
-            System.out.println();
-            for (int j = -1; j <= mazeArray.getMazeField()[0].length; j++) {
-                if (i < 0 || i >= mazeArray.getMazeField().length) {
-                    System.out.print(PathWallSymbols.STRING_HORIZON_BORDER.getValue());
-                } else if (j < 0 || j >= mazeArray.getMazeField()[0].length) {
-                    System.out.print(PathWallSymbols.STRING_VERTICAL_BORDER.getValue());
-                } else {
-                    System.out.print(mazeArray.getCell(i, j).getValue());
-                }
-            }
-        }
-        System.out.println();
+        LookAtMazeField.readMazeField(System.out::print, mazeField);
 
-        //Создаём фаил в текущей директории.
-        String filePath = Paths.get("").toAbsolutePath().toString() + "\\maze_result.txt";
+        //Создаём фаил в текущей директории и пишем в него.
+        String resultFileName = String.format("\\maze_result%dx%d.txt", widthX, heightY);
+        String filePath = Paths.get("").toAbsolutePath().toString() + resultFileName;
         try (FileWriter writer = new FileWriter(filePath, false)) {
             File file = new File(filePath);
             file.createNewFile();
-            for (int i = -1; i <= mazeArray.getMazeField().length; i++) {
-                writer.append('\n');
-                for (int j = -1; j <= mazeArray.getMazeField()[0].length; j++) {
-                    if (i < 0 || i >= mazeArray.getMazeField().length) {
-                        writer.append(PathWallSymbols.STRING_HORIZON_BORDER.getValue());
-                    } else if (j < 0 || j >= mazeArray.getMazeField()[0].length) {
-                        writer.append(PathWallSymbols.STRING_VERTICAL_BORDER.getValue());
-                    } else {
-                        writer.append(mazeArray.getCell(i, j).getValue());
-                    }
-                }
-            }
+
+            LookAtMazeField.readMazeField(
+                    str -> {
+                        try {
+                            writer.append(str);
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
+                    },
+                    mazeField
+            );
+
             writer.flush();
         } catch (IOException ex) {
             System.out.println(ex.getMessage());

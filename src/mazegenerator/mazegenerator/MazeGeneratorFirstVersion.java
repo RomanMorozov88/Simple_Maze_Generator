@@ -1,4 +1,7 @@
-package mazegenerator;
+package mazegenerator.mazegenerator;
+
+import mazegenerator.Cell;
+import mazegenerator.util.PathWallSymbols;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -7,14 +10,15 @@ import java.util.function.BiFunction;
 /**
  * Генерация лабиринта.
  */
-public class MazeGenerator {
+public class MazeGeneratorFirstVersion implements MazeGenerator {
 
-    private MazeArray mazeArray;
+    private Cell[][] mazeField;
     //Лист посещённых ячеек для дальнейшего их переиспользования.
     private List<Cell> visited = new ArrayList<>();
 
-    public MazeGenerator(MazeArray mazeArray) {
-        this.mazeArray = mazeArray;
+    @Override
+    public void setMazeField(Cell[][] mazeField) {
+        this.mazeField = mazeField;
     }
 
     /**
@@ -22,14 +26,15 @@ public class MazeGenerator {
      *
      * @return
      */
-    public void walkFromRandomCell() {
+    @Override
+    public void walkOverMazeFiled() {
         Cell current = null;
-        int startY = (int) (Math.random() * mazeArray.getMazeField().length);
+        int startY = (int) (Math.random() * mazeField.length);
         int startX = 0;
         if (startY == 0) {
-            startX = (int) (Math.random() * mazeArray.getMazeField()[0].length);
+            startX = (int) (Math.random() * mazeField[0].length);
         }
-        current = mazeArray.getCell(startY, startX);
+        current = mazeField[startY][startX];
         current.setValue(PathWallSymbols.STRING_PATH.getValue());
         this.step(current);
     }
@@ -39,7 +44,7 @@ public class MazeGenerator {
      *
      * @param current
      */
-    public void step(Cell current) {
+    private void step(Cell current) {
         this.visited.add(current);
         List<Cell> candidates = getCandidates(current);
         Cell next = null;
@@ -72,29 +77,34 @@ public class MazeGenerator {
         List<Cell> result = new ArrayList<>();
         Cell candidateForNext;
         //Нижнее направление.
-        if (current.getY() + 1 < mazeArray.getMazeField().length - 1) {
-            candidateForNext = mazeArray.getCell(current.getY() + 1, current.getX());
+        if (current.getY() + 1 < mazeField.length - 1) {
+            //candidateForNext = mazeArrayInitializer.getCell(current.getY() + 1, current.getX());
+            candidateForNext = mazeField[current.getY() + 1][current.getX()];
             if (checkCandidateCell(candidateForNext, current)) {
                 result.add(candidateForNext);
             }
         }
         //Верхнее направление.
         if (current.getY() - 1 > 0) {
-            candidateForNext = mazeArray.getCell(current.getY() - 1, current.getX());
+            //candidateForNext = mazeArrayInitializer.getCell(current.getY() - 1, current.getX());
+            candidateForNext = mazeField[current.getY() - 1][current.getX()];
             if (checkCandidateCell(candidateForNext, current)) {
                 result.add(candidateForNext);
             }
         }
+
         //Правое направление.
-        if (current.getX() + 1 < mazeArray.getMazeField()[0].length - 1) {
-            candidateForNext = mazeArray.getCell(current.getY(), current.getX() + 1);
+        if (current.getX() + 1 < mazeField[0].length - 1) {
+            //candidateForNext = mazeArrayInitializer.getCell(current.getY(), current.getX() + 1);
+            candidateForNext = mazeField[current.getY()][current.getX() + 1];
             if (checkCandidateCell(candidateForNext, current)) {
                 result.add(candidateForNext);
             }
         }
         //Левое направление.
         if (current.getX() - 1 > 0) {
-            candidateForNext = mazeArray.getCell(current.getY(), current.getX() - 1);
+            //candidateForNext = mazeArrayInitializer.getCell(current.getY(), current.getX() - 1);
+            candidateForNext = mazeField[current.getY()][current.getX() - 1];
             if (checkCandidateCell(candidateForNext, current)) {
                 result.add(candidateForNext);
             }
@@ -113,17 +123,17 @@ public class MazeGenerator {
      */
     private boolean checkCandidateCell(Cell candidate, Cell from) {
         boolean result = true;
-        Integer[] xLimits = getCuteLimits(candidate.getX(), from.getX(), mazeArray.getMazeField()[0].length);
-        Integer[] yLimits = getCuteLimits(candidate.getY(), from.getY(), mazeArray.getMazeField().length);
+        Integer[] xLimits = getCuteLimits(candidate.getX(), from.getX(), mazeField[0].length);
+        Integer[] yLimits = getCuteLimits(candidate.getY(), from.getY(), mazeField.length);
 
         for (int i = yLimits[0]; i < yLimits[1]; i++) {
             if (!result) {
                 break;
             }
             for (int j = xLimits[0]; j < xLimits[1]; j++) {
-                Cell bufferCell = mazeArray.getCell(i, j);
+                Cell bufferCell = mazeField[i][j];
                 if (bufferCell.getValue().equals(PathWallSymbols.STRING_PATH.getValue())
-                        && !mazeArray.getCell(i, j).equals(from)) {
+                        && !bufferCell.equals(from)) {
                     result = false;
                     break;
                 }

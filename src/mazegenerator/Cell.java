@@ -1,5 +1,7 @@
 package mazegenerator;
 
+import mazegenerator.util.PathWallSymbols;
+
 import java.util.Objects;
 
 /**
