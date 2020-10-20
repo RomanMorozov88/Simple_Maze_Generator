@@ -53,24 +53,25 @@ public class MazeGeneratorFirstVersion implements MazeGenerator {
         current.setValue(PathWallSymbols.STRING_PATH.getValue());
         List<Cell> candidates = getCandidates(current);
         Cell next = null;
+        int rndIndex;
         if (candidates.size() > 0) {
             //т.к. используется не set- то делаем проверку, что бы не плодить дубликаты.
             if (!this.visited.contains(current)) {
                 this.visited.add(current);
             }
-            int rndIndex = (int) (Math.random() * candidates.size());
+            rndIndex = (int) (Math.random() * candidates.size());
             next = candidates.get(rndIndex);
             this.step(next);
-            //Если вернулись сюда после step- выбираем случайно следующую
-            //ячейку для старта новой рекурсии и, соответственно, проклалдки пути.
-            if (this.visited.size() > 0) {
-                rndIndex = (int) (Math.random() * this.visited.size());
-                this.step(this.visited.get(rndIndex));
-            }
         } else {
             //Если вариантов для движения нет- удаляем текущую ячейку из листа посещённых,
             //что бы в дальнейшем эта ячейка не выпадала как вариант для старта новой рекурсии.
             this.visited.remove(current);
+        }
+        //Если пришли сюда- выбираем случайно следующую
+        //ячейку для старта новой рекурсии и, соответственно, проклалдки пути.
+        while (this.visited.size() > 0) {
+            rndIndex = (int) (Math.random() * this.visited.size());
+            this.step(this.visited.get(rndIndex));
         }
     }
 
