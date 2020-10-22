@@ -1,8 +1,9 @@
-package mazegenerator;
+package consolemaze;
 
-import mazegenerator.mazegenerator.MazeGenerator;
-import mazegenerator.mazegenerator.MazeGeneratorFirstVersion;
-import mazegenerator.util.LookAtMazeField;
+import consolemaze.mazegenerator.MazeGenerator;
+import consolemaze.mazegenerator.MazeGeneratorFirstVersion;
+import consolemaze.util.CheckInputData;
+import consolemaze.util.LookAtMazeField;
 
 import java.io.File;
 import java.io.FileWriter;
@@ -14,23 +15,6 @@ import java.nio.file.Paths;
  */
 public class MainClass {
 
-    /**
-     * Проверка, что входящую строку можно преобразовать в Integer.
-     *
-     * @param s
-     * @return
-     * @throws NumberFormatException
-     */
-    private static Integer getDigit(String s) throws NumberFormatException {
-        Integer result = null;
-        try {
-            result = Integer.parseInt(s);
-            return result;
-        } catch (NumberFormatException e) {
-            return result;
-        }
-    }
-
     public static void main(String[] args) {
 
         Integer widthX = 30;
@@ -39,8 +23,8 @@ public class MainClass {
         String resultFileName = String.format("\\maze_result%dx%d.txt", widthX, heightY);
 
         if (args.length == 2) {
-            widthX = getDigit(args[0]);
-            heightY = getDigit(args[1]);
+            widthX = CheckInputData.getDigit(args[0]);
+            heightY = CheckInputData.getDigit(args[1]);
             if (widthX != null && heightY != null) {
                 if ((heightY >= 10 && heightY <= 50) && (widthX >= 10 && widthX <= 50)) {
                     mazeField = MazeFieldFactory.initMazeField(widthX, heightY);

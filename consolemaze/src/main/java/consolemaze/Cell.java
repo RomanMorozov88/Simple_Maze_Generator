@@ -1,6 +1,6 @@
-package mazegenerator;
+package consolemaze;
 
-import mazegenerator.util.PathWallSymbols;
+import consolemaze.util.PathWallSymbols;
 
 import java.util.Objects;
 

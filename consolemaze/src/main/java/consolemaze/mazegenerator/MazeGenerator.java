@@ -1,6 +1,6 @@
-package mazegenerator.mazegenerator;
+package consolemaze.mazegenerator;
 
-import mazegenerator.Cell;
+import consolemaze.Cell;
 
 /**
  * Базовый интерфейс- на случай, если надо будет добавить

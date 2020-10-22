@@ -1,7 +1,7 @@
-package mazegenerator.mazegenerator;
+package consolemaze.mazegenerator;
 
-import mazegenerator.Cell;
-import mazegenerator.util.PathWallSymbols;
+import consolemaze.util.PathWallSymbols;
+import consolemaze.Cell;
 
 import java.util.ArrayList;
 import java.util.List;

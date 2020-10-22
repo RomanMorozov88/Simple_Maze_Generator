@@ -1,4 +1,4 @@
-package mazegenerator.util;
+package consolemaze.util;
 
 /**
  * Enum для символов стен и проходов, а так же рамки.

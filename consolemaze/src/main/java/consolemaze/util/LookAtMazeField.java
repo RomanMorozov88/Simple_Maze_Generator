@@ -1,6 +1,6 @@
-package mazegenerator.util;
+package consolemaze.util;
 
-import mazegenerator.Cell;
+import consolemaze.Cell;
 
 import java.util.function.Consumer;
 

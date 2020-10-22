@@ -1,4 +1,4 @@
-package mazegenerator;
+package consolemaze;
 
 /**
  * Создание массива-поля лабиринта.
