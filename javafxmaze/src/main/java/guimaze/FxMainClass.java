@@ -22,7 +22,7 @@ public class FxMainClass extends Application {
         loader.setLocation(xmlUrl);
         Parent root = loader.load();
 
-        InputStream iconStream = getClass().getResourceAsStream("/icon.png");
+        InputStream iconStream = getClass().getResourceAsStream("/maze_icon.png");
         Image icon = new Image(iconStream);
         primaryStage.getIcons().add(icon);
         primaryStage.setTitle("Maze GUI");
