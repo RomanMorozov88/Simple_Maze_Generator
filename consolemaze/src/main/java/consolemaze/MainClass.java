@@ -1,9 +1,11 @@
 package consolemaze;
 
-import consolemaze.mazegenerator.MazeGenerator;
-import consolemaze.mazegenerator.MazeGeneratorFirstVersion;
-import consolemaze.util.CheckInputData;
-import consolemaze.util.LookAtMazeField;
+import basic.mazegenerator.MazeGenerator;
+import basic.mazegenerator.MazeGeneratorFirstVersion;
+import basic.model.Cell;
+import basic.util.CheckInputData;
+import basic.util.LookAtMazeField;
+import basic.util.MazeFieldFactory;
 
 import java.io.File;
 import java.io.FileWriter;

@@ -56,8 +56,8 @@
     <dependencies>
 
         <dependency>
-            <groupId>consolemaze</groupId>
-            <artifactId>consolemaze</artifactId>
+            <groupId>mazebase</groupId>
+            <artifactId>mazebase</artifactId>
             <version>1.0-SNAPSHOT</version>
         </dependency>
 

@@ -1,17 +1,17 @@
 package guimaze;
 
 
+import basic.mazegenerator.MazeGenerator;
+import basic.mazegenerator.MazeGeneratorFirstVersion;
+import basic.model.Cell;
+import basic.util.CheckInputData;
+import basic.util.MazeFieldFactory;
+import basic.util.PathWallSymbols;
 import javafx.fxml.FXML;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.GridPane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
-import consolemaze.Cell;
-import consolemaze.MazeFieldFactory;
-import consolemaze.mazegenerator.MazeGenerator;
-import consolemaze.mazegenerator.MazeGeneratorFirstVersion;
-import consolemaze.util.CheckInputData;
-import consolemaze.util.PathWallSymbols;
 
 /**
  * Читает\получает данные из mainScene.fxml
